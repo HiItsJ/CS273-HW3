@@ -11,32 +11,21 @@
 #include <stdexcept>
 #include <limits>
 #include <ios>
+#include "readint.hpp"
 using namespace std;
 
 int main(){
-    return 0;
-}
-//EX03_1
-int read_int(const string& prompt, int smallest, int largest){
-    cin.exceptoins(ios_base::failbit);
-    int num = 0;
-    while(true){
-        try{
-            cout<<prompt;
-            cin>>num;
-            return num;
-        }
-        catch(ios_base::failure& ex){
-            cout<<"Bad numeric string -- try again\n";
-            cin.clear();
-            cin.ignore(numeric_limits<int>::max(), '\n');
-        }
+    int low, high;
+    cout << "Enter the range of values to read.\n";
+    cout << "high: ";
+    cin >> high;
+    cout << "low: ";
+    cin >> low;
+    try {
+        int number = read_int("Please enter a number within the range: ", low, high);
+        cout << "You entered " << number << endl;
     }
-    if (smallest == largest){
-        throw std::invalid_argument("No values in range");
+    catch(invalid_argument& e){
+        cerr << "Exception: You supplied an invalid argument for read_int!\n";
     }
-    if (smallest > largest){
-        throw std::ios_base::failure("Invalid input");
-    }
-    return smallest+1;
 }
